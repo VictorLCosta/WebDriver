@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using selenium;
 using System;
 using System.IO;
 using Xunit;
@@ -19,9 +20,23 @@ namespace test
         }
         
         [Fact]
-        public void Test1()
+        public void TestFirefox()
         {
-            var pathDriver = _config.GetSection("Selenium:PathDriverFirefox").Value;
+            ExecuteGoogleTest(Browser.FireFox);
+        }
+
+        [Fact]
+        public void TestChrome()
+        {
+            ExecuteGoogleTest(Browser.Chrome);
+        }
+
+        private void ExecuteGoogleTest(Browser browser)
+        {
+            GoogleTest googleTest = new(_config, browser);
+            
+            googleTest.LoadPage();
+            googleTest.ClosePage();
         }
     }
 }
