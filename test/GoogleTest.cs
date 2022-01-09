@@ -1,5 +1,7 @@
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using selenium;
@@ -40,6 +42,18 @@ namespace test
         {
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
             _driver.Navigate().GoToUrl("http://www.google.com.br");
+        }
+
+        public ReadOnlyCollection<IWebElement> SearchGoogle(string query)
+        {
+            var webElement = _driver.FindElement(By.Name("q"));
+            webElement.SendKeys(query);
+            webElement.SendKeys(Keys.Enter);
+
+            var resultSearch = _driver.FindElement(By.Id("search"));
+            var results = resultSearch.FindElements(By.XPath(".//a"));
+
+            return results;
         }
 
         public void ClosePage()

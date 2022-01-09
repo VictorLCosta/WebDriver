@@ -36,6 +36,9 @@ namespace test
             GoogleTest googleTest = new(_config, browser);
             
             googleTest.LoadPage();
+            var results = googleTest.SearchGoogle("mrinfo");
+            Assert.True(results.Count > 0);
+
             googleTest.ClosePage();
         }
     }
