@@ -30,6 +30,13 @@ namespace test
             Imc imc = new(_config, browser);
             imc.LoadPage();
 
+            imc.FillIMC(80, 1.74);
+            imc.CalculateIMC();
+            var result = imc.GetIMC();
+
+            Assert.NotNull(result);
+            Assert.Equal(26.42, result);
+
             imc.ClosePage();
         }
     }

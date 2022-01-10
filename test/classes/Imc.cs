@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using selenium;
 
 namespace test.classes
@@ -41,24 +42,32 @@ namespace test.classes
             _driver.Navigate().GoToUrl("https://localhost:5001");
         }
 
-        /*public void PreencherIMC(double peso, double altura)
+        public void FillIMC(double peso, double altura)
         {
-            _driver.A(By.Id("id_Peso"), peso.ToString());
-            _driver.AtribuirValor(By.Name("Altura"), altura.ToString());
+            var elPeso = _driver.FindElement(By.Id("id_Peso"));
+            elPeso.SendKeys(peso.ToString());
+
+            var elHeight = _driver.FindElement(By.Name("Altura"));
+            elHeight.SendKeys(altura.ToString());
         }
 
-        public void CalcularIMC()
+        public void CalculateIMC()
         {
-            _driver.Enviar(By.Id("id_btnCalcular"));
-            _driver.Esperar(By.Id("ResultImc"), TimeSpan.FromSeconds(10));
+            var btn = _driver.FindElement(By.Id("id_btnCalcular"));
+            btn.Submit();
+
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(x => x.FindElement(By.Id("ResultImc")) != null);
         }
 
-        public double ObterIMC()
+        public double GetIMC()
         {
-            return Convert.ToDouble(_driver.ObterValor(By.Id("ResultImc")));
+            var elResult = _driver.FindElement(By.Id("ResultImc"));
+
+            return Convert.ToDouble(elResult.Text);
         }
 
-        public string ObterMensagem()
+        /*public string ObterMensagem()
         {
             return _driver.ObterValor(By.ClassName("alert"));
         }*/
