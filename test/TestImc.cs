@@ -20,22 +20,34 @@ namespace test
         }
 
         [Fact]
-        public void TestChrome()
+        public void TestFireFox()
         {
-            ExecuteTestIMC(Browser.Chrome);
+            ExecuteTestIMC(Browser.FireFox, 50, 1.75, 16.33, "Muito abaixo do peso");
         }
 
-        private void ExecuteTestIMC(Browser browser)
+        [Fact]
+        public void TestChrome()
+        {
+            ExecuteTestIMC(Browser.Chrome, 50, 1.75, 16.33, "Muito abaixo do peso");
+        }
+
+        private void ExecuteTestIMC(Browser browser, double weight, double height, 
+            double expectedValue, string expectedMessage)
         {
             Imc imc = new(_config, browser);
             imc.LoadPage();
 
-            imc.FillIMC(80, 1.74);
+            imc.FillIMC(weight, height);
             imc.CalculateIMC();
             var result = imc.GetIMC();
 
             Assert.NotNull(result);
-            Assert.Equal(26.42, result);
+            Assert.Equal(expectedValue, result);
+
+            var message = imc.GetMessage();
+
+            Assert.NotNull(message);
+            Assert.Equal(expectedMessage, message);
 
             imc.ClosePage();
         }

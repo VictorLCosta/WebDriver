@@ -14,8 +14,10 @@ namespace selenium
             switch (browser)
             {
                 case Browser.FireFox:
-                    FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(pathDriver);
-                    webDriver = new FirefoxDriver(service);
+                    FirefoxOptions options = new();
+                    options.AcceptInsecureCertificates = true;
+
+                    webDriver = new FirefoxDriver(pathDriver, options);
                     break;
 
                 case Browser.Chrome:

@@ -67,10 +67,10 @@ namespace test.classes
             return Convert.ToDouble(elResult.Text);
         }
 
-        /*public string ObterMensagem()
+        public string GetMessage()
         {
-            return _driver.ObterValor(By.ClassName("alert"));
-        }*/
+            return _driver.FindElement(By.ClassName("alert")).Text;
+        }
 
         public void ClosePage()
         {
