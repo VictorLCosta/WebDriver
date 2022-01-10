@@ -1,20 +1,17 @@
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using selenium;
 
-namespace test
+namespace test.classes
 {
-    public class GoogleTest
+    public class Imc
     {
         private IConfiguration _config;
         private Browser _browser;
         private IWebDriver _driver;
 
-        public GoogleTest(IConfiguration config, Browser browser)
+        public Imc(IConfiguration config, Browser browser)
         {
             _config = config;
             _browser = browser;
@@ -41,20 +38,30 @@ namespace test
         public void LoadPage()
         {
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
-            _driver.Navigate().GoToUrl("http://www.google.com.br");
+            _driver.Navigate().GoToUrl("https://localhost:5001");
         }
 
-        public ReadOnlyCollection<IWebElement> SearchGoogle(string query)
+        /*public void PreencherIMC(double peso, double altura)
         {
-            var webElement = _driver.FindElement(By.Name("q"));
-            webElement.SendKeys(query);
-            webElement.SendKeys(Keys.Enter);
-
-            var resultSearch = _driver.FindElement(By.Id("search"));
-            var results = resultSearch.FindElements(By.XPath(".//a"));
-
-            return results;
+            _driver.A(By.Id("id_Peso"), peso.ToString());
+            _driver.AtribuirValor(By.Name("Altura"), altura.ToString());
         }
+
+        public void CalcularIMC()
+        {
+            _driver.Enviar(By.Id("id_btnCalcular"));
+            _driver.Esperar(By.Id("ResultImc"), TimeSpan.FromSeconds(10));
+        }
+
+        public double ObterIMC()
+        {
+            return Convert.ToDouble(_driver.ObterValor(By.Id("ResultImc")));
+        }
+
+        public string ObterMensagem()
+        {
+            return _driver.ObterValor(By.ClassName("alert"));
+        }*/
 
         public void ClosePage()
         {

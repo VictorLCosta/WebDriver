@@ -2,15 +2,16 @@ using Microsoft.Extensions.Configuration;
 using selenium;
 using System;
 using System.IO;
+using test.classes;
 using Xunit;
 
 namespace test
 {
-    public class Test
+    public class TestGoogle
     {
         private IConfiguration _config;
 
-        public Test()
+        public TestGoogle()
         {
             _config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -33,13 +34,13 @@ namespace test
 
         private void ExecuteGoogleTest(Browser browser)
         {
-            GoogleTest googleTest = new(_config, browser);
+            Google google = new(_config, browser);
             
-            googleTest.LoadPage();
-            var results = googleTest.SearchGoogle("mrinfo");
+            google.LoadPage();
+            var results = google.SearchGoogle("mrinfo");
             Assert.True(results.Count > 0);
 
-            googleTest.ClosePage();
+            google.ClosePage();
         }
     }
 }
