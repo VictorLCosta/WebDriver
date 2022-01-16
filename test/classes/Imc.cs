@@ -6,34 +6,11 @@ using selenium;
 
 namespace test.classes
 {
-    public class Imc
+    public class Imc : BaseClass
     {
-        private IConfiguration _config;
-        private Browser _browser;
-        private IWebDriver _driver;
-
         public Imc(IConfiguration config, Browser browser)
+            : base(config, browser)
         {
-            _config = config;
-            _browser = browser;
-
-            string pathDriver = null;
-
-            if(_browser == Browser.FireFox)
-            {
-                pathDriver = _config.GetSection("Selenium:PathDriverFirefox").Value;
-            }
-            else if(_browser == Browser.Chrome)
-            {
-                pathDriver = _config.GetSection("Selenium:PathDriverChrome").Value;
-            }
-            else 
-            {
-                pathDriver = _config.GetSection("Selenium:PathDriverOpera").Value;
-            }
-
-            _driver = WebDriverFactory.CreateWebDriver(browser, pathDriver);
-
         }
 
         public void LoadPage()
@@ -45,7 +22,7 @@ namespace test.classes
         {
             _driver.InputValue(By.Id("id_Peso"), peso.ToString());
 
-            _driver.InputValue(By.Id("Altura"), altura.ToString());
+            _driver.InputValue(By.Id("id_Altura"), altura.ToString());
         }
 
         public void CalculateIMC()
@@ -57,12 +34,12 @@ namespace test.classes
 
         public double GetIMC()
         {
-            return Convert.ToDouble(_driver.GetValue(By.Id("SelectImc")));
+            return Convert.ToDouble(_driver.GetValue(By.Id("ResultImc")));
         }
 
         public string GetMessage()
         {
-            return _driver.GetValue(By.Id("alert"));
+            return _driver.GetValue(By.ClassName("alert"));
         }
 
         public void ClosePage()
