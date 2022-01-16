@@ -4,20 +4,11 @@ using selenium;
 using test.classes;
 using Xunit;
 
-namespace test
+namespace test.testCases
 {
-    public class TestImc
+    public class TestImc : BaseTest
     {
-        private IConfiguration _config;
-
-        public TestImc()
-        {
-            _config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-        }
+        public TestImc() {}
 
         [Fact]
         public void TestFireFox()

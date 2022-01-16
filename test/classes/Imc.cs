@@ -38,38 +38,31 @@ namespace test.classes
 
         public void LoadPage()
         {
-            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
-            _driver.Navigate().GoToUrl("https://localhost:5001");
+            _driver.OpenBrowserPage(TimeSpan.FromSeconds(5), "https://localhost:5001");
         }
 
         public void FillIMC(double peso, double altura)
         {
-            var elPeso = _driver.FindElement(By.Id("id_Peso"));
-            elPeso.SendKeys(peso.ToString());
+            _driver.InputValue(By.Id("id_Peso"), peso.ToString());
 
-            var elHeight = _driver.FindElement(By.Name("Altura"));
-            elHeight.SendKeys(altura.ToString());
+            _driver.InputValue(By.Id("Altura"), altura.ToString());
         }
 
         public void CalculateIMC()
         {
-            var btn = _driver.FindElement(By.Id("id_btnCalcular"));
-            btn.Submit();
+            _driver.Submit(By.Id("id_btnCalcular"));
 
-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(x => x.FindElement(By.Id("ResultImc")) != null);
+            _driver.Wait(By.Id("ResultImc"), TimeSpan.FromSeconds(10));
         }
 
         public double GetIMC()
         {
-            var elResult = _driver.FindElement(By.Id("ResultImc"));
-
-            return Convert.ToDouble(elResult.Text);
+            return Convert.ToDouble(_driver.GetValue(By.Id("SelectImc")));
         }
 
         public string GetMessage()
         {
-            return _driver.FindElement(By.ClassName("alert")).Text;
+            return _driver.GetValue(By.Id("alert"));
         }
 
         public void ClosePage()

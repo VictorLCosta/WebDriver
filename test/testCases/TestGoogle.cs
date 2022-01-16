@@ -5,20 +5,11 @@ using System.IO;
 using test.classes;
 using Xunit;
 
-namespace test
+namespace test.testCases
 {
-    public class TestGoogle
+    public class TestGoogle : BaseTest
     {
-        private IConfiguration _config;
-
-        public TestGoogle()
-        {
-            _config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-        }
+        public TestGoogle() {}
         
         [Fact]
         public void TestFirefox()
